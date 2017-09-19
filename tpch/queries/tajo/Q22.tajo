@@ -1,0 +1,58 @@
+DROP TABLE IF EXISTS q22_customer_tmp;
+DROP TABLE IF EXISTS q22_customer_tmp1;
+DROP TABLE IF EXISTS q22_orders_tmp;
+DROP TABLE IF EXISTS q22_global_sales_opportunity;
+
+-- create target tables
+create table q22_customer_tmp(c_acctbal double, c_custkey int8, cntrycode text);
+create table q22_customer_tmp1(avg_acctbal double);
+create table q22_orders_tmp(o_custkey int8);
+create table q22_global_sales_opportunity(cntrycode text, numcust int, totacctbal double);
+
+-- the query
+insert overwrite into q22_customer_tmp
+select
+  c_acctbal, c_custkey, substr(c_phone, 1, 2) as cntrycode
+from
+  customer
+where
+  substr(c_phone, 1, 2) = '13' or
+  substr(c_phone, 1, 2) = '31' or
+  substr(c_phone, 1, 2) = '23' or
+  substr(c_phone, 1, 2) = '29' or
+  substr(c_phone, 1, 2) = '30' or
+  substr(c_phone, 1, 2) = '18' or
+  substr(c_phone, 1, 2) = '17';
+  
+insert overwrite into q22_customer_tmp1
+select
+  avg(c_acctbal)
+from
+  q22_customer_tmp
+where
+  c_acctbal > 0.00;
+  
+insert overwrite into q22_orders_tmp
+select 
+  o_custkey
+from
+  orders
+group by
+  o_custkey;
+
+insert overwrite into q22_global_sales_opportunity
+select cntrycode, count(1) as numcust, sum(c_acctbal) as totacctbal
+from (
+  select cntrycode, c_acctbal from (
+    select cntrycode, c_acctbal, o_custkey 
+     from
+      q22_orders_tmp ot 
+      right outer join q22_customer_tmp ct 
+      on ct.c_custkey = ot.o_custkey
+    ) b
+    where o_custkey is null    
+) a
+where c_acctbal > (4998.769056963163::double)
+group by cntrycode
+order by cntrycode;
+

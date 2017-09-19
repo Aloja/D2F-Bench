@@ -1,5 +1,5 @@
-drop view q21_tmp1_cached;
-drop view q21_tmp2_cached;
+drop view if exists q21_tmp1_cached;
+drop view if exists q21_tmp2_cached;
 
 create view q21_tmp1_cached as
 select

@@ -1,6 +1,6 @@
-drop view q22_customer_tmp_cached;
-drop view q22_customer_tmp1_cached;
-drop view q22_orders_tmp_cached;
+drop view if exists q22_customer_tmp_cached;
+drop view if exists q22_customer_tmp1_cached;
+drop view if exists q22_orders_tmp_cached;
 
 create view if not exists q22_customer_tmp_cached as
 select

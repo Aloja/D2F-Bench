@@ -1,0 +1,87 @@
+CREATE DATABASE IF NOT EXISTS ${DB};
+
+create external table IF NOT EXISTS supplier (
+    S_SUPPKEY bigint,
+    S_NAME text,
+    S_ADDRESS text,
+    S_NATIONKEY bigint,
+    S_PHONE text,
+    S_ACCTBAL double,
+    S_COMMENT text)
+using text with ('text.delimiter'='|') location '${LOCATION}/supplier.tbl';
+  
+create external table IF NOT EXISTS lineitem (
+    L_ORDERKEY bigint,
+    L_PARTKEY bigint,
+    L_SUPPKEY bigint,
+    L_LINENUMBER bigint,
+    L_QUANTITY double,
+    L_EXTENDEDPRICE double,
+    L_DISCOUNT double,
+    L_TAX double,
+    L_RETURNFLAG text,
+    L_LINESTATUS text,
+    L_SHIPDATE date,
+    L_COMMITDATE date,
+    L_RECEIPTDATE date,
+    L_SHIPINSTRUCT text,
+    L_SHIPMODE text,
+    L_COMMENT text)
+using text with ('text.delimiter'='|') location '${LOCATION}/lineitem.tbl';
+  
+create external table IF NOT EXISTS part (
+    P_PARTKEY bigint,
+    P_NAME text,
+    P_MFGR text,
+    P_BRAND text,
+    P_TYPE text,
+    P_SIZE integer,
+    P_CONTAINER text,
+    P_RETAILPRICE double,
+    P_COMMENT text)
+using text with ('text.delimiter'='|') location '${LOCATION}/part.tbl';
+
+create external table IF NOT EXISTS partsupp (
+    PS_PARTKEY bigint,
+    PS_SUPPKEY bigint,
+    PS_AVAILQTY int,
+    PS_SUPPLYCOST double,
+    PS_COMMENT text)
+using text with ('text.delimiter'='|') location '${LOCATION}/partsupp.tbl';
+ 
+create external table IF NOT EXISTS customer (
+    C_CUSTKEY bigint,
+    C_NAME text,
+    C_ADDRESS text,
+    C_NATIONKEY bigint,
+    C_PHONE text,
+    C_ACCTBAL double,
+    C_MKTSEGMENT text,
+    C_COMMENT text)
+using text with ('text.delimiter'='|') location '${LOCATION}/customer.tbl';
+ 
+
+create external table IF NOT EXISTS orders (
+    O_ORDERKEY bigint,
+    O_CUSTKEY bigint,
+    O_ORDERSTATUS text,
+    O_TOTALPRICE double,
+    O_ORDERDATE date,
+    O_ORDERPRIORITY text,
+    O_CLERK text,
+    O_SHIPPRIORITY int,
+    O_COMMENT text)
+using text with ('text.delimiter'='|') location '${LOCATION}/orders.tbl';
+ 
+create external table IF NOT EXISTS nation (
+    N_NATIONKEY bigint,
+    N_NAME text,
+    N_REGIONKEY bigint,
+    N_COMMENT text)
+using text with ('text.delimiter'='|') location '${LOCATION}/nation.tbl';
+ 
+create external table IF NOT EXISTS region (
+    R_REGIONKEY bigint,
+    R_NAME text,
+    R_COMMENT text)
+using text with ('text.delimiter'='|') location '${LOCATION}/region.tbl';

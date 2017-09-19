@@ -1,0 +1,61 @@
+Apache Tajo URL: http://apache.org/dyn/closer.cgi/tajo/tajo-0.11.1/tajo-0.11.1.tar.gz 
+
+Desktop version URL:http://www.gruter.com/download/downloadfinal/?sw=nothanks 
+
+INSTALLATION
+
+1. Extract the package
+$ tar xvfz tajo-x.x.x-desktop-x.tar.gz
+$ cd tajo-x.x.x-desktop-x
+
+2. Configure
+
+2.1. Quick way - setup Tajo and SQL workbench at once
+$ ./configure-desktop.sh
+
+2.2. Alternative way - setup Tajo and SQL workbench separately
+$ tajo/bin/configure.sh
+$ nestor/bin/configure.sh
+
+3. Start up
+
+3.1. Quick way - start Tajo and SQL workbench at once
+$ ./startup-desktop.sh
+
+3.2. Alternative way - start Tajo and SQL workbench separately
+$ tajo/bin/startup.sh
+$ nestor/bin/nestor start
+
+4. Load the sample data set (optional)
+$ tajo/bin/your-massive-data.sh
+
+5. Play with Tajo
+
+5.1. Run the Tajo command-line shell (TSQL)
+$ tajo/bin/tsql
+
+5.2. Monitor Tajo status at Tajo web admin console
+http://localhost:26080
+
+5.3. Run analysis at SQL workbench
+http://localhost:PORT
+
+6. Shutdown
+
+6.1. Shutdown Tajo.
+$ tajo/bin/shutdown.sh
+
+6.2. Shutdown SQL Workbench.
+$ nestor/bin/nestor stop
+
+6.3. Shutdown Tajo and SQL workbench at once.
+$ ./shutdown-desktop.sh
+
+---------------------------------------
+Load Data in TAJO
+---------------------------------------
+$./tsql -param DB=tpch_1sf -param LOCATION=hdfs://quickstart.cloudera/user/cloudera/tpch/ -f tpc-h_schema.tajo
+
+-- no HDFS - local mode
+$./tsql -param DB=tpch_1sf -param LOCATION=/home/cloudera/Desktop/tpch_2_16_0/dbgen/ -f tpc-h_schema.tajo 
+

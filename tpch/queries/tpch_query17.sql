@@ -1,4 +1,4 @@
-drop view q17_lineitem_tmp_cached;
+drop view if exists q17_lineitem_tmp_cached;
 
 create view q17_lineitem_tmp_cached as
 select
