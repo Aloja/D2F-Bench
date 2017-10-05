@@ -1,6 +1,6 @@
 select
 	s_name,
-	count(*) as numwait
+	count(1) as numwait
 from
 	supplier,
 	lineitem l1,
@@ -13,7 +13,8 @@ where
 	and l1.l_receiptdate > l1.l_commitdate
 	and exists (
 		select 
-			*
+			l2.l_orderkey,
+			l2.l_suppkey
 		from
 			lineitem l2
 		where
@@ -22,7 +23,10 @@ where
 	)
 	and not exists (
 		select
-			*	
+			l3.l_orderkey,
+			l3.l_suppkey,
+			l3.l_receiptdate,
+			l3.l_commitdate	
 		from
 			lineitem l3
 		where

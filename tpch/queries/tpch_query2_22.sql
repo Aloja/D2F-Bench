@@ -1,6 +1,6 @@
 select
 	cntrycode,
-	count(*) as numcust,
+	count(1) as numcust,
 	sum(c_acctbal) as totacctbal
 from	(
 	select
@@ -23,7 +23,7 @@ from	(
 		)
 		and not exists (
 			select
-				*
+				o_custkey
 			from
 				orders
 			where

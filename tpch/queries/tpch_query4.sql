@@ -22,7 +22,7 @@ select
 from 
   orders o join q4_order_priority_tmp t 
   on 
-o.o_orderkey = t.o_orderkey 
+  o.o_orderkey = t.o_orderkey 
 and o.o_orderdate >= '1996-05-01' 
 and o.o_orderdate < '1996-08-01' 
 group by o_orderpriority 
